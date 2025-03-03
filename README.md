@@ -5,3 +5,4 @@ RocketShip actor has the following functional components -
 1. RocketShipStateManager - manages the state behavior of the Ship
 2. ShipStagingController - manages the staging behavior of the Ship
 3. RocketThrustComponent - applies Thrust Vector to the Ship body
+All this while playing in a multiplayer scenario
