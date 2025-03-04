@@ -1,10 +1,10 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
-
+#include "RocketShipStateManagerComponent.h"
 #include "RocketShipProject/RocketShip.h"
 #include "RocketShipProject/State/RocketShipIdleState.h"
 #include "RocketShipProject/State/RocketShipLaunchedState.h"
 #include "RocketShipProject/State/RocketShipStagingState.h"
-#include "RocketShipStateManagerComponent.h"
+
 
 
 class ARocketShip;

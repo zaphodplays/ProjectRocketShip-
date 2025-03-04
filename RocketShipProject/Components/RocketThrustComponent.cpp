@@ -2,16 +2,14 @@
 
 
 
-
-#include "RocketShipProject/Interfaces/RocketShipInterface.h"
 #include "RocketThrustComponent.h"
+#include "RocketShipProject/Interfaces/RocketShipInterface.h"
+
 
 // Sets default values for this component's properties
 URocketThrustComponent::URocketThrustComponent()
 {
 	
-
-	// ...
 }
 
 void URocketThrustComponent::ApplyThrust(const float ThrustStrength)
@@ -24,14 +22,18 @@ void URocketThrustComponent::ApplyThrust(const float ThrustStrength)
 	{
 		FVector Thrust = (RocketShip->GetDestination() - RocketShip->GetShipMesh()->GetCenterOfMass()).GetSafeNormal();
 		Thrust = Thrust * ThrustStrength * 100.f;
+		
 		if (Thrust.Length() > 0.f )
 		{
 			RocketShip->GetShipMesh()->AddForceAtLocation(Thrust, RocketShip->GetShipMesh()->GetCenterOfMass());
 			FVector PhysicsVelocity = RocketShip->GetShipMesh()->GetPhysicsLinearVelocity();
-			FRotator TargetRotation = PhysicsVelocity.ToOrientationRotator();
+			FRotator TargetRotation = Thrust.ToOrientationRotator();
 			TargetRotation.Pitch += -90.f;
-			//this->GetOwner()->SetActorRotation(TargetRotation, ETeleportType::TeleportPhysics);
-		
+			FRotator InterpedRotator = FMath::RInterpConstantTo(this->GetOwner()->GetActorRotation(), TargetRotation, 0.001f, 1.f);
+			
+			//this->GetOwner()->SetActorRotation(InterpedRotator, ETeleportType::TeleportPhysics);
+			
+			//
 		}
 	}
 	

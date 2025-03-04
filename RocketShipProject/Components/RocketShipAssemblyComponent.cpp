@@ -1,10 +1,10 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
-
+#include "RocketShipAssemblyComponent.h"
 #include "RocketShipProject/RocketShip.h"
 #include "RocketShipProject/RocketShipProjectCharacter.h"
 #include "RocketShipProject/RocketStage.h"
 #include "RocketShipProject/Interfaces/RocketStageInterface.h"
-#include "RocketShipAssemblyComponent.h"
+
 
 
 // Sets default values for this component's properties

@@ -3,10 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "GameFramework/Actor.h"
 #include "Interfaces/RocketShipInterface.h"
 #include "RocketShip.generated.h"
 
+class UShipAbilitySystemComponent;
+class URocketShipGASet;
 class URocketThrustComponent;
 class UShipStagingController;
 class URocketShipStateManagerComponent;
@@ -44,10 +47,19 @@ private:
 	URocketShipStateManagerComponent* RocketShipStateManager;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UShipAbilitySystemComponent* ShipAbilitySystemComponent;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UShipStagingController* ShipStagingController;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	URocketThrustComponent* ThrustComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Abilities", meta = (AllowPrivateAccess = "true"))
+	URocketShipGASet* AbilityDataAsset;
+
+	UPROPERTY(ReplicatedUsing = OnRep_StateTagChanged)
+	FGameplayTag CurrentStateTag;
 
 public:
 	// Called every frame
@@ -107,6 +119,9 @@ public:
 private:
 
 	FVector ComputeCOM(float& TotalMass);
+
+	UFUNCTION()
+	void OnRep_StateTagChanged(const FGameplayTag OldTag);
 
 	FTimerHandle DetachTimer;
 

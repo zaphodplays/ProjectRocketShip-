@@ -1,10 +1,10 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
-
+#include "RocketShipStageActiveState.h"
 #include "RocketShipProject/Components/RocketThrustComponent.h"
 #include "RocketShipProject/Interfaces/RocketShipInterface.h"
 #include "RocketShipProject/Interfaces/RocketStageInterface.h"
 #include "RocketShipProject/Interfaces/StagingControllerInterface.h"
-#include "RocketShipStageActiveState.h"
+
 
 void URocketShipStageActiveState::Enter(TScriptInterface<IRocketShipInterface> Ship)
 {

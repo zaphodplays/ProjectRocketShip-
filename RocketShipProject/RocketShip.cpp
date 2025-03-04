@@ -1,18 +1,22 @@
 ﻿
 // Fill out your copyright notice in the Description page of Project Settings.
 UE_DISABLE_OPTIMIZATION
+#include "RocketShip.h"
 #include "Components/ShipStagingController.h"
 #include "Components/RocketShipStateManagerComponent.h"
 #include "Components/RocketThrustComponent.h"
 #include "RocketStage.h"
 #include "State/RocketShipStageActiveState.h"
-#include "RocketShip.h"
+#include "RocketShipGASet.h"
+#include "Components/ShipAbilitySystemComponent.h"
+
 
 // Sets default values
 ARocketShip::ARocketShip()
 {
 	ProxyMesh = CreateDefaultSubobject<UStaticMeshComponent>("ProxyMesh");
 	ShipMesh = CreateDefaultSubobject<UStaticMeshComponent>("ShipMesh");
+	ShipAbilitySystemComponent = CreateDefaultSubobject<UShipAbilitySystemComponent>("AbilitySystemComponent");
 	RocketShipStateManager = CreateDefaultSubobject<URocketShipStateManagerComponent>("RocketShipStateManager");
 	ShipStagingController = CreateDefaultSubobject<UShipStagingController>("ShipStagingController");
 	ThrustComponent = CreateDefaultSubobject<URocketThrustComponent>("ThrustComponent");
@@ -37,8 +41,14 @@ void ARocketShip::BeginPlay()
 		GEngine->AddOnScreenDebugMessage( 1, 500.f, FColorList::Bronze, FString::Printf(TEXT("RocketShip Project: Amar Shukla")));
 		return;
 	}
-	
 
+	if (!IsValid(ShipAbilitySystemComponent) || !IsValid(AbilityDataAsset) )
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AbilitySystemComponent or AbilityDataAsset Invalid"));
+		return;
+	}
+
+	AbilityDataAsset->GiveAbilities(ShipAbilitySystemComponent);
 }
 
 UStaticMeshComponent* ARocketShip::GetShipMesh()
@@ -134,6 +144,11 @@ FVector ARocketShip::ComputeCOM(float& TotalMass)
 	COM.X = RootComponent->GetComponentLocation().X;
 	COM.Y = RootComponent->GetComponentLocation().Y;
 	return COM;
+}
+
+void ARocketShip::OnRep_StateTagChanged(const FGameplayTag OldTag)
+{
+	GEngine->AddOnScreenDebugMessage(5, 0.3f, FColor::Magenta, FString::Printf(TEXT("State changed from %s to %s"), *OldTag.ToString(), *CurrentStateTag.ToString()));
 }
 
 void ARocketShip::UpdateCOM()
