@@ -40,8 +40,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void Auth_SetIgnition(bool bIgnitionStatus) = 0;
 
+	UFUNCTION(BlueprintCallable)
 	virtual void AuthPerformStaging() = 0;
 
+	UFUNCTION(BlueprintCallable)
 	virtual void AuthActivateStage() = 0;
 
 	virtual void UpdateCOM() = 0;

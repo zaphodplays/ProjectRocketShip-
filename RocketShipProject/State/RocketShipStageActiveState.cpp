@@ -27,7 +27,7 @@ void URocketShipStageActiveState::Update(float DeltaTime)
 		else
 		{
 			RocketShip->UpdateCOM();
-			RocketShip->GetThrusterComponent()->ApplyThrust(RocketShip->GetAttachedStages().Last()->GetCurrentThrust().Length());
+			//RocketShip->GetThrusterComponent()->ApplyThrust();
 		}
 		
 	}

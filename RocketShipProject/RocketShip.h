@@ -105,7 +105,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void AuthPerformStaging() override;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	virtual void AuthActivateStage() override;
 
 	UFUNCTION()

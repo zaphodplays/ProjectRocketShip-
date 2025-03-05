@@ -15,13 +15,21 @@ class IRocketShipInterface;
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class ROCKETSHIPPROJECT_API URocketThrustComponent : public UActorComponent
 {
+protected:
+	virtual void OnRegister() override;
+
+public:
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
+		FActorComponentTickFunction* ThisTickFunction) override;
+
+private:
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this component's properties
 	URocketThrustComponent();
 
-	void ApplyThrust(const float ThrustStrength);
+	void ApplyThrust();
 
 protected:
 	// Called when the game starts

@@ -13,7 +13,7 @@ URocketShipStateManagerComponent::URocketShipStateManagerComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 	
 	// ...
 }
@@ -52,7 +52,7 @@ void URocketShipStateManagerComponent::TickComponent(float DeltaTime, ELevelTick
 
 	if (IsValid(ShipState) && GetOwner()->HasAuthority())
 	{
-		ShipState->Update(DeltaTime);
+		//ShipState->Update(DeltaTime);
 	}
 }
 

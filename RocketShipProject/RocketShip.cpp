@@ -59,12 +59,13 @@ void ARocketShip::Auth_SetIgnition(bool bIgnitionStatus)
 	if (HasAuthority() && !bIgnition)
 	{
 		bIgnition = bIgnitionStatus;
-		ProxyMesh->SetHiddenInGame(true);
+		//ProxyMesh->SetHiddenInGame(true);
 		ProxyMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		ProxyMesh->SetSimulatePhysics(false);
-		ProxyMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+		ProxyMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 		ShipMesh->SetEnableGravity(true);
-		OnLaunchTriggered.Broadcast();
+		//OnLaunchTriggered.Broadcast();
+		SetShipState(FGameplayTag::RequestGameplayTag(FName("RSP.Ship.State.Thrusting")));
 	}
 }
 
@@ -146,7 +147,7 @@ void ARocketShip::AuthActivateStage()
 	if (HasAuthority())
 	{
 		ShipStagingController->AuthActivateCurrentStage();
-		RocketShipStateManager->SetState(URocketShipStageActiveState::StaticClass());
+		//RocketShipStateManager->SetState(URocketShipStageActiveState::StaticClass());
 	}
 }
 

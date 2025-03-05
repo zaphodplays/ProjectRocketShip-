@@ -2,6 +2,8 @@
 
 
 #include "ShipStagingController.h"
+
+#include "RocketThrustComponent.h"
 #include "Net/UnrealNetwork.h"
 #include "RocketShipProject/RocketShip.h"
 #include "RocketShipProject/RocketStage.h"
@@ -51,6 +53,8 @@ void UShipStagingController::AuthActivateCurrentStage()
 		if (TScriptInterface<IRocketStageInterface>& CurrentStage = AttachedStages[NumberOfAttachedStages - 1])
 		{
 			CurrentStage->ActivateStage(true);
+			Ship->UpdateCOM();
+			Ship->GetThrusterComponent()->SetComponentTickEnabled(true);
 		}
 		
 	}
@@ -80,7 +84,7 @@ void UShipStagingController::AuthDetachCurrentStage()
 		StageActor->SetLifeSpan(ActivateDelay); 
 	}
 	AuthRemoveStage(CurrentStage);
-	GetWorld()->GetTimerManager().SetTimer(ActivateTimer, this, &UShipStagingController::AuthActivateCurrentStage, ActivateDelay, false);
+	GetWorld()->GetTimerManager().SetTimer(ActivateTimer, this, &UShipStagingController::AuthSetNextStageToThrust, ActivateDelay, false);
 	DetachTimer.Invalidate();
 	
 }
@@ -165,4 +169,9 @@ void UShipStagingController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(UShipStagingController, AttachedStages);
 	DOREPLIFETIME(UShipStagingController, NumberOfAttachedStages);
+}
+
+void UShipStagingController::AuthSetNextStageToThrust()
+{
+	Ship->SetShipState(FGameplayTag::RequestGameplayTag(FName(TEXT("RSP.Ship.State.Thrusting"))));
 }

@@ -74,6 +74,10 @@ public:
 	UPROPERTY(Transient)
 	TScriptInterface<IRocketShipInterface> Ship;
 
+private:
+
+	void AuthSetNextStageToThrust();
+
 };
 
 

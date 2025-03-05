@@ -29,6 +29,7 @@ void ARocketShipPlayerController::LaunchShip_Implementation(ARocketShip* Ship)
 		return;
 	//this->PlayerCameraManager->SetViewTarget(Ship);
 	//Ship->Auth_SetIgnition(true);
+	Ship->SetOwner(this);
 	Ship->SetShipState(FGameplayTag::RequestGameplayTag(FName("RSP.Ship.State.Launch")));
 }
 
