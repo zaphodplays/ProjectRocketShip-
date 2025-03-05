@@ -65,8 +65,12 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual const FGameplayTag& GetShipState();
+
+	void SetShipState(const FGameplayTag& NewStateTag);
+
 	UFUNCTION(BlueprintCallable)
-	void Auth_SetIgnition(bool bIgnitionStatus);
+	virtual void Auth_SetIgnition(bool bIgnitionStatus) override;
 
 	virtual UStaticMeshComponent* GetShipMesh() override;
 
@@ -140,19 +144,10 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnStageDetached OnStageDetached;
+
+private:
+	void TriggerGameplayEvent(const FGameplayTag& EventTag);
 };
 
-inline void ARocketShip::Auth_SetIgnition(bool bIgnitionStatus)
-{
-	if (HasAuthority() && !bIgnition)
-	{
-		bIgnition = bIgnitionStatus;
-		ProxyMesh->SetHiddenInGame(true);
-		ProxyMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		ProxyMesh->SetSimulatePhysics(false);
-		ProxyMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
-		ShipMesh->SetEnableGravity(true);
-		OnLaunchTriggered.Broadcast();
-	}
-}
+
 

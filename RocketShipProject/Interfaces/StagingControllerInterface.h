@@ -5,7 +5,7 @@
 #include "StagingControllerInterface.generated.h"
 
 // This class does not need to be modified.
-UINTERFACE()
+UINTERFACE(meta = (CannotImplementInterfaceInBlueprint), BlueprintType)
 class UStagingControllerInterface : public UInterface
 {
 	GENERATED_BODY()

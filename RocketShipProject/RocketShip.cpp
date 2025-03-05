@@ -49,6 +49,23 @@ void ARocketShip::BeginPlay()
 	}
 
 	AbilityDataAsset->GiveAbilities(ShipAbilitySystemComponent);
+
+	// Start in Idle state
+	SetShipState(FGameplayTag::RequestGameplayTag(FName("RSP.Ship.State.Idle")));
+}
+
+void ARocketShip::Auth_SetIgnition(bool bIgnitionStatus)
+{
+	if (HasAuthority() && !bIgnition)
+	{
+		bIgnition = bIgnitionStatus;
+		ProxyMesh->SetHiddenInGame(true);
+		ProxyMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		ProxyMesh->SetSimulatePhysics(false);
+		ProxyMesh->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
+		ShipMesh->SetEnableGravity(true);
+		OnLaunchTriggered.Broadcast();
+	}
 }
 
 UStaticMeshComponent* ARocketShip::GetShipMesh()
@@ -85,6 +102,11 @@ void ARocketShip::Tick(float DeltaTime)
 	
 }
 
+const FGameplayTag& ARocketShip::GetShipState()
+{
+	return CurrentStateTag;
+}
+
 FVector ARocketShip::GetDestination()
 {
 	return Destination;
@@ -95,6 +117,27 @@ void ARocketShip::AuthPerformStaging()
 	if (HasAuthority())
 	{
 		ShipStagingController->PerformStaging();
+	}
+}
+
+void ARocketShip::TriggerGameplayEvent(const FGameplayTag& EventTag)
+{
+	if (ShipAbilitySystemComponent)
+	{
+		FGameplayEventData EventData;
+		EventData.EventTag = EventTag;
+		ShipAbilitySystemComponent->HandleGameplayEvent(EventTag, &EventData);
+	}
+}
+
+void ARocketShip::SetShipState(const FGameplayTag& NewStateTag)
+{
+	if (HasAuthority() && ShipAbilitySystemComponent )
+	{
+		ShipAbilitySystemComponent->RemoveLooseGameplayTag(CurrentStateTag);
+		ShipAbilitySystemComponent->AddLooseGameplayTag(NewStateTag);
+		CurrentStateTag = NewStateTag;
+		TriggerGameplayEvent(CurrentStateTag);
 	}
 }
 
@@ -169,6 +212,7 @@ void ARocketShip::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 	DOREPLIFETIME(ARocketShip, bIgnition);
 	DOREPLIFETIME(ARocketShip, ShipMesh);
 	DOREPLIFETIME(ARocketShip, ProxyMesh);
+	DOREPLIFETIME(ARocketShip, CurrentStateTag);
 }
 
 

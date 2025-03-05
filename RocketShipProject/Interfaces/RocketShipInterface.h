@@ -1,15 +1,17 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
+#include "GameplayTagContainer.h"
 
 #include "RocketShipInterface.generated.h"
 
+struct FGameplayTag;
 class URocketThrustComponent;
 class IStagingControllerInterface;
 class IRocketStageInterface;
 
 // This class does not need to be modified.
-UINTERFACE()
+UINTERFACE(meta = (CannotImplementInterfaceInBlueprint), BlueprintType)
 class URocketShipInterface : public UInterface
 {
 	GENERATED_BODY()
@@ -35,6 +37,9 @@ public:
 
 	virtual URocketThrustComponent* GetThrusterComponent() = 0;
 
+	UFUNCTION(BlueprintCallable)
+	virtual void Auth_SetIgnition(bool bIgnitionStatus) = 0;
+
 	virtual void AuthPerformStaging() = 0;
 
 	virtual void AuthActivateStage() = 0;
@@ -42,4 +47,10 @@ public:
 	virtual void UpdateCOM() = 0;
 
 	virtual void AuthAddStage(TScriptInterface<IRocketStageInterface> NewStage) = 0;
+
+	virtual const FGameplayTag& GetShipState() = 0;
+
+	virtual void SetShipState(const FGameplayTag& NewState) = 0;
+
+	
 };
