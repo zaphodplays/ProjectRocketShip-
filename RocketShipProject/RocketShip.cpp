@@ -5,7 +5,7 @@ UE_DISABLE_OPTIMIZATION
 #include "Components/ShipStagingController.h"
 #include "Components/RocketThrustComponent.h"
 #include "RocketStage.h"
-#include "RocketShipGASet.h"
+#include "GAS/RocketShipGASet.h"
 #include "Components/ShipAbilitySystemComponent.h"
 
 

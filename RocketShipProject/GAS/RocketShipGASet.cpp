@@ -2,9 +2,8 @@
 
 
 #include "RocketShipGASet.h"
-
-#include "Components/ShipAbilitySystemComponent.h"
-#include "GAS/ShipGameplayAbilityBase.h"
+#include "ShipGameplayAbilityBase.h"
+#include "RocketShipProject/Components/ShipAbilitySystemComponent.h"
 
 
 void URocketShipGASet::GiveAbilities(UShipAbilitySystemComponent* AbilitySystemComponent) const
