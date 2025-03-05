@@ -3,10 +3,8 @@
 UE_DISABLE_OPTIMIZATION
 #include "RocketShip.h"
 #include "Components/ShipStagingController.h"
-#include "Components/RocketShipStateManagerComponent.h"
 #include "Components/RocketThrustComponent.h"
 #include "RocketStage.h"
-#include "State/RocketShipStageActiveState.h"
 #include "RocketShipGASet.h"
 #include "Components/ShipAbilitySystemComponent.h"
 
@@ -17,7 +15,6 @@ ARocketShip::ARocketShip()
 	ProxyMesh = CreateDefaultSubobject<UStaticMeshComponent>("ProxyMesh");
 	ShipMesh = CreateDefaultSubobject<UStaticMeshComponent>("ShipMesh");
 	ShipAbilitySystemComponent = CreateDefaultSubobject<UShipAbilitySystemComponent>("AbilitySystemComponent");
-	RocketShipStateManager = CreateDefaultSubobject<URocketShipStateManagerComponent>("RocketShipStateManager");
 	ShipStagingController = CreateDefaultSubobject<UShipStagingController>("ShipStagingController");
 	ThrustComponent = CreateDefaultSubobject<URocketThrustComponent>("ThrustComponent");
 	RootComponent = ShipMesh;
