@@ -128,7 +128,7 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Rocket Stage")
 	float FuelMass; // Initial fuel mass (kg)
 
-	UPROPERTY(VisibleAnywhere, Category = "Rocket Stage")
+	UPROPERTY(VisibleAnywhere, Category = "Rocket Stage", Replicated)
 	float FuelRemaining;
 
 	UPROPERTY(VisibleAnywhere, Category = "Rocket Stage")
@@ -207,4 +207,5 @@ inline void ARocketStage::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	DOREPLIFETIME(ARocketStage, bIsSpent);
 	DOREPLIFETIME(ARocketStage, bIsDetaching);
 	DOREPLIFETIME(ARocketStage, DetachVelocity);
+	DOREPLIFETIME(ARocketStage, FuelRemaining);
 }

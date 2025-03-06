@@ -55,8 +55,8 @@ void URocketThrustComponent::ApplyThrust()
 			FVector PhysicsVelocity = RocketShip->GetShipMesh()->GetPhysicsLinearVelocity();
 			FRotator TargetRotation = PhysicsVelocity.ToOrientationRotator();
 			TargetRotation.Pitch += -90.f;
-			FRotator InterpedRotator = FMath::RInterpConstantTo(this->GetOwner()->GetActorRotation(), TargetRotation, 0.001f, 1000.f);
-			//this->GetOwner()->SetActorRotation(InterpedRotator, ETeleportType::TeleportPhysics);
+			//FRotator InterpdRotator = FMath::RInterpConstantTo(this->GetOwner()->GetActorRotation(), TargetRotation, 0.001f, 1000.f);
+			//this->GetOwner()->SetActorRotation(InterpdRotator, ETeleportType::None);
 			RocketShip->GetShipMesh()->AddForceAtLocation(Thrust, RocketShip->GetShipMesh()->GetCenterOfMass());
 		}
 	}

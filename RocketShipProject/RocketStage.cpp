@@ -52,7 +52,7 @@ bool ARocketStage::AttachToStage(TScriptInterface<IRocketStageInterface> OtherSt
 	// Align the next stage with this stage's top socket
 	if (OtherStage->GetMesh()->AttachToComponent(Mesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, GetDownSocketName()))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "ARocketStage::SnapToStage" + GetLocalRole());
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColorList::Cyan, "ARocketStage::SnapToStage" + GetLocalRole());
 	}
 	
 	OtherStage->GetMesh()->WeldTo(BaseMesh.Get(), GetDownSocketName(), true);
@@ -124,7 +124,7 @@ void ARocketStage::Tick(float DeltaTime)
 	}
 	else if (bIsActive && !HasAuthority())
 	{
-		GEngine->AddOnScreenDebugMessage(4, 0.3f, FColor::Yellow, FString::Printf(TEXT("Current Stage Fuel Percent = %d"), FuelRemaining/FuelMass*100.f));
+		GEngine->AddOnScreenDebugMessage(4, 0.3f, FColor::Yellow, FString::Printf(TEXT("Current Stage Fuel Remaining = %.2f%%"), FuelRemaining/FuelMass*100.f));
 	}
 	
 }

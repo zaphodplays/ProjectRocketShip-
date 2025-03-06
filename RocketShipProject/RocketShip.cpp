@@ -61,6 +61,10 @@ void ARocketShip::Auth_SetIgnition(bool bIgnitionStatus)
 		ProxyMesh->SetSimulatePhysics(false);
 		ProxyMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 		ShipMesh->SetEnableGravity(true);
+		FVector Orientation = (GetDestination() - GetShipMesh()->GetCenterOfMass()).GetSafeNormal();
+		FRotator Orientator = Orientation.ToOrientationRotator();
+		Orientator.Pitch += -90.f;
+		SetActorRotation(Orientator);
 		//OnLaunchTriggered.Broadcast();
 		SetShipState(FGameplayTag::RequestGameplayTag(FName("RSP.Ship.State.Thrusting")));
 	}
